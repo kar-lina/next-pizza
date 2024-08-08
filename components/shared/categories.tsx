@@ -4,7 +4,7 @@ import React from 'react';
 interface Props {
   className?: string;
 }
-const cats = ['Пиццы', 'Комбо', 'Закуски', 'Коктейли', 'Кофе', 'Напитки', 'Десерты', 'Десерты'];
+const cats = ['Пиццы', 'Комбо', 'Закуски', 'Коктейли', 'Кофе', 'Напитки', 'Десерты'];
 const activeIndex = 1;
 export const Categories: React.FC<Props> = ({ className }) => {
   return (

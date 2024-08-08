@@ -7,3 +7,4 @@ export { Drawer } from './drawer';
 export { Popover } from './popover';
 export { Checkbox } from './checkbox';
 export { Dialog } from './dialog';
+export { RangeSlider } from './range-slider';
