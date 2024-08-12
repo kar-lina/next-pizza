@@ -31,16 +31,24 @@ export const Filters: React.FC<Props> = ({ className }) => {
         title="Ингредиенты"
         limit={6}
         defaultItems={[
-          { text: 'Сырный соус', value: '1', checked: false },
-          { text: 'Чеснок', value: '2', checked: false },
-          { text: 'Соленые огурчики', value: '3', checked: false },
-          { text: 'Моцарелла', value: '4', checked: false },
+          { text: 'Сырный соус', value: '1' },
+          { text: 'Чеснок', value: '2' },
+          { text: 'Соленые огурчики', value: '3' },
+          { text: 'Моцарелла', value: '4' },
         ]}
         items={[
-          { text: 'Сырный соус', value: '1', checked: false },
-          { text: 'Чеснок', value: '2', checked: false },
-          { text: 'Соленые огурчики', value: '3', checked: false },
-          { text: 'Моцарелла', value: '4', checked: false },
+          { text: 'Сырный соус', value: '1' },
+          { text: 'Чеснок', value: '2' },
+          { text: 'Соленые огурчики', value: '3' },
+          { text: 'Моцарелла', value: '4' },
+          { text: 'Сырный соус', value: '1' },
+          { text: 'Чеснок', value: '2' },
+          { text: 'Соленые огурчики', value: '3' },
+          { text: 'Моцарелла', value: '4' },
+          { text: 'Сырный соус', value: '1' },
+          { text: 'Чеснок', value: '2' },
+          { text: 'Соленые огурчики', value: '3' },
+          { text: 'Моцарелла', value: '4' },
         ]}
       />
     </div>
