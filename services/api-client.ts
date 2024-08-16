@@ -1,4 +1,5 @@
-import * as ingredients from '@/prisma/constants';
+
+import * as ingredients from './ingredients';
 import * as products from './products';
 export const Api = {
   products,

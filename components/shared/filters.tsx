@@ -4,12 +4,16 @@ import { Title } from './title';
 import { FilterCheckbox } from './filter-checkbox';
 import { Input, RangeSlider } from '../ui';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
+import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 
 interface Props {
   className?: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+  const { ingredients, loading, selectedIds, onAddId } = useFilterIngredients();
+  const items  = ingredients.map((ingredient) => ({ text: ingredient.name, value: String(ingredient.id) }));
+  const defaultItems = items.slice(0, 5);
   return (
     <div className={className}>
       <Title size="sm" text="Фильтрация" className="font-bold mb-5" />
@@ -26,31 +30,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
         </div>
         <RangeSlider min={0} max={5000} step={10} value={[0, 5000]} />
       </div>
-      <CheckboxFiltersGroup
-        className="mt-6"
-        title="Ингредиенты"
-        limit={6}
-        defaultItems={[
-          { text: 'Сырный соус', value: '1' },
-          { text: 'Чеснок', value: '2' },
-          { text: 'Соленые огурчики', value: '3' },
-          { text: 'Моцарелла', value: '4' },
-        ]}
-        items={[
-          { text: 'Сырный соус', value: '1' },
-          { text: 'Чеснок', value: '2' },
-          { text: 'Соленые огурчики', value: '3' },
-          { text: 'Моцарелла', value: '4' },
-          { text: 'Сырный соус', value: '1' },
-          { text: 'Чеснок', value: '2' },
-          { text: 'Соленые огурчики', value: '3' },
-          { text: 'Моцарелла', value: '4' },
-          { text: 'Сырный соус', value: '1' },
-          { text: 'Чеснок', value: '2' },
-          { text: 'Соленые огурчики', value: '3' },
-          { text: 'Моцарелла', value: '4' },
-        ]}
-      />
+      <CheckboxFiltersGroup name="ingredients" className="mt-6" title="Ингредиенты" limit={6} loading={loading} defaultItems={defaultItems} items={items} selectedIds={selectedIds} onClikedCheckbox={onAddId} />
     </div>
   );
 };
