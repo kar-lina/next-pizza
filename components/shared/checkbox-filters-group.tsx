@@ -7,13 +7,13 @@ interface Props {
   className?: string;
   title: string;
   items: Item[];
-  defaultItems: Item[];
+  defaultItems?: Item[];
   name?: string;
   loading?: boolean;
   limit?: number;
   searcInputPlaceholder?: string;
   onClikedCheckbox?: (id: string) => void;
-  selectedIds?: Set<string>;
+  values?: Set<string>;
   defaultValue?: string[];
 }
 
@@ -25,7 +25,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   name,
   loading,
   limit = 5,
-  selectedIds,
+  values,
   searcInputPlaceholder = 'Поиск...',
   className,
 }) => {
@@ -47,7 +47,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
       </div>
     );
 
-  const renderItems = showAll ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase())) : defaultItems?.slice(0, limit);
+  const renderItems = showAll ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase())) : (defaultItems || items)?.slice(0, limit);
 
   return (
     <div className={className}>
@@ -59,7 +59,15 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
       )}
       <div className="flex flex-col gap-4 max-h-96 overflow-auto scrollbar pr-2 ">
         {renderItems.map((item, key) => (
-          <FilterCheckbox name={name} key={String(item.value) + key} text={item.text} value={item.value} endAdornment={item.endAdornment} onCheckedChange={() => onClikedCheckbox?.(item.value)} checked={selectedIds?.has(item.value)} />
+          <FilterCheckbox
+            name={name}
+            key={String(item.value) + key}
+            text={item.text}
+            value={item.value}
+            endAdornment={item.endAdornment}
+            onCheckedChange={() => onClikedCheckbox?.(item.value)}
+            checked={values?.has(item.value)}
+          />
         ))}
       </div>
 

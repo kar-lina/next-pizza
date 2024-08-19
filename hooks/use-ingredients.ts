@@ -1,19 +1,13 @@
-import { Api } from '@/services/api-client';
-import { Ingredient } from '@prisma/client';
-import React from 'react';
-import { useSet } from 'react-use';
+import { Api } from "@/services/api-client";
+import { Ingredient } from "@prisma/client";
+import React from "react";
+
 
 type IngredientItem = Pick<Ingredient, 'id' | 'name'>;
-interface ReturnProps {
-  ingredients: IngredientItem[];
-  loading: boolean;
-  selectedIds: Set<string>;
-  onAddId: (id: string) => void;
-}
-export const useFilterIngredients = (): ReturnProps => {
-  const [ingredients, setIngredients] = React.useState<ReturnProps['ingredients']>([]);
+
+export const useIngredients = () => {
+  const [ingredients, setIngredients] = React.useState<IngredientItem[]>([]);
   const [loading, setLoading] = React.useState(false);
-  const [selectedIds, { add, has, remove, toggle }] = useSet(new Set<string>([]));
 
   React.useEffect(() => {
     async function fetchIngredients() {
@@ -30,5 +24,5 @@ export const useFilterIngredients = (): ReturnProps => {
     }
     fetchIngredients();
   }, []); // пустой массив,чтобы запустился только один раз при первом ренедере
-  return { ingredients, loading, onAddId: toggle, selectedIds };
-};
+  return { ingredients, loading};
+}
