@@ -44,7 +44,7 @@ export const useFilters = (): ReturnProps => {
     priceTo: Number(searchParams.get('priceTo')) || undefined,
   });
   const updatePrices = (name: keyof PriceProps, value: number) => {
-    setPrices({ ...prices, [name]: value });
+    setPrices((prev) => ({ ...prev, [name]: value }));
   };
 
   // Sizes filter
@@ -52,18 +52,6 @@ export const useFilters = (): ReturnProps => {
 
   // Pizza types  filter
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>(searchParams.get('pizzaTypes')?.split(',') || []));
-
-  // React.useEffect(() => {
-  //   const filters = {
-  //     ...prices,
-  //     sizes: Array.from(sizes),
-  //     pizzaTypes: Array.from(pizzaTypes),
-  //     ingredients: Array.from(selectedIngredients),
-  //   };
-  //   const query = QueryString.stringify(filters, { arrayFormat: 'comma' });
-  //   router.push(`?${query}`, { scroll: false });
-  //   console.log(searchParams);
-  // }, [prices, sizes, pizzaTypes, selectedIngredients, router]);
 
   return {
     prices,
