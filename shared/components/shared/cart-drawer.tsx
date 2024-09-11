@@ -1,3 +1,4 @@
+'use client'
 import React, { PropsWithChildren } from 'react';
 
 interface Props {
@@ -7,6 +8,8 @@ import { Sheet, SheetPortal, SheetOverlay, SheetTrigger, SheetClose, SheetConten
 import { ArrowRight } from 'lucide-react';
 import { Button } from '../ui';
 import Link from 'next/link';
+import { CartDrawerItem } from './cart-drawer-item';
+import { getCartItemDetails } from '@/shared/lib';
 
 export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ className, children }) => {
   return (
@@ -18,10 +21,22 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ className, chil
             В корзине <span className="font-bold">3 товара</span>
           </SheetTitle>
         </SheetHeader>
-        {/* Items */}
+        <div className="flex-1 -mx-6 mt-5 scrollbar overflow-auto">
+          <div className="mb-2">
+            <CartDrawerItem
+              id={0}
+              imageUrl={'https://media.dodostatic.net/image/r:292x292/11EEF9E43DC39C94AA5765DBF1C97100.avif'}
+              details={getCartItemDetails(30, 2, [{ name: 'Цыпленок' }, { name: 'Сыыыыыыыыыр' }])}
+              name={'Бефстроганов'}
+              price={400}
+              quantity={2}
+            />
+          </div>
+        </div>
+
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full">
-            <div className='flex mb-4'>
+            <div className="flex mb-4">
               <span className="flex flex-1 text-lg text-neutral-500">
                 Итого
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2"></div>
