@@ -1,25 +1,19 @@
 import { create } from 'zustand';
-import { PizzaSize, PizzaType } from '../constants/pizza';
-import { Ingredient } from '@prisma/client';
 import { Api } from '../services/api-client';
 import { getCartDetailsData } from '../lib';
-export type ICartItem = {
-  id: number;
-  quantity: number;
-  price: number;
-  name: string;
-  imageUrl: string;
-  pizzaSize?: PizzaSize | null;
-  type?: PizzaType | null;
-  ingredients?: Pick<Ingredient, 'name' | 'price'>[];
-};
+import { CartStateItem } from '../lib/get-cart-details-data';
+
+// формат aйтема корзины, не в чистом виде, который возвращается  с сервера, а в формате, который нужен для UI
+
 export interface CartState {
   loading: boolean;
   error: boolean;
   totalAmount: number;
-  items: ICartItem[];
+  items: CartStateItem[];
+
   fetchCartItems: () => Promise<void>;
   updateItemQuantity: (id: number, quantity: number) => Promise<void>;
+
   // !!!!TODO типизировать values
   addCartItem: (values: any) => Promise<void>;
   removeCartItem: (id: number) => Promise<void>;
@@ -42,7 +36,30 @@ export const useCartStore = create<CartState>((set) => ({
       set({ loading: false });
     }
   },
-  removeCartItem: async (id) => {},
-  updateItemQuantity: async (id, quantity) => {},
+  removeCartItem: async (id) => {
+    try {
+      set({ loading: true, error: false });
+      const data = await Api.cart.removeCartItem(id);
+      set(getCartDetailsData(data));
+    } catch (error) {
+      console.log(error);
+      set({ error: true });
+    } finally {
+      set({ loading: false });
+    }
+
+  },
+  updateItemQuantity: async (id, quantity) => {
+     try {
+       set({ loading: true, error: false });
+       const data = await Api.cart.updateItemQuantity(id, quantity);
+       set(getCartDetailsData(data));
+     } catch (error) {
+       console.log(error);
+       set({ error: true });
+     } finally {
+       set({ loading: false });
+     }
+  },
   addCartItem: async (valuse) => {},
 }));

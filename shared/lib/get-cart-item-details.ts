@@ -1,7 +1,8 @@
 import { Ingredient } from "@prisma/client";
 import { mapPizzaType, PizzaSize, PizzaType } from "../constants/pizza";
+import { CartStateItem } from "./get-cart-details-data";
 
-export const getCartItemDetails = (pizzaSize?: PizzaSize, pizzaType?: PizzaType, ingredients?: Ingredient[]) => {
+export const getCartItemDetails = (ingredients: CartStateItem['ingredients'], pizzaSize?: PizzaSize, pizzaType?: PizzaType ) => {
   const details = [];
 
   if (pizzaSize && pizzaType) {
@@ -10,7 +11,7 @@ export const getCartItemDetails = (pizzaSize?: PizzaSize, pizzaType?: PizzaType,
     details.push(`${typeName} тесто`);
   }
   if (ingredients) {
-    details.push(...ingredients.map((ingredient) => ingredient.name));
+    details.push(...ingredients.map((ingredient) => ingredient?.name));
   }
   return details.join(', ');
 };
