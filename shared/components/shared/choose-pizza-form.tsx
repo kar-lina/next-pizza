@@ -14,15 +14,15 @@ interface Props {
   ingredients: Ingredient[];
   items: ProductItem[];
   className?: string;
-  onClickAddCart?: VoidFunction;
+  onSumbit?: (itemId: number, ingredients: number[]) => void;
 }
 
-export const ChoosePizzaForm: React.FC<Props> = ({ name, imageUrl, ingredients, items, onClickAddCart, className }) => {
-
-  const { type, size, setType, setSize, selectedIngredients, addIngredient, avalablePizzaSizes } = usePizzaOptions(items);
+export const ChoosePizzaForm: React.FC<Props> = ({ name, imageUrl, ingredients, items, onSumbit, className }) => {
+  const { type, size, setType, setSize, selectedIngredients, currentItemId, addIngredient, avalablePizzaSizes } = usePizzaOptions(items);
   const { totalPrice, textDetails } = getPizzaDetails(type, size, items, ingredients, selectedIngredients);
   const handleClickAddCart = () => {
-    onClickAddCart?.();
+    if(!currentItemId) return
+    onSumbit?.(currentItemId, Array.from(selectedIngredients));
     console.log({ size, type, selectedIngredients, totalPrice });
   };
   return (

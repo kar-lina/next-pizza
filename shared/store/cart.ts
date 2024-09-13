@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { Api } from '../services/api-client';
 import { getCartDetailsData } from '../lib';
 import { CartStateItem } from '../lib/get-cart-details-data';
+import { CreateCartItemValue } from '../services/dto/cart.dto';
 
 // формат aйтема корзины, не в чистом виде, который возвращается  с сервера, а в формате, который нужен для UI
 
@@ -61,5 +62,16 @@ export const useCartStore = create<CartState>((set) => ({
        set({ loading: false });
      }
   },
-  addCartItem: async (valuse) => {},
+  addCartItem: async (values: CreateCartItemValue) => {
+    try {
+      set({ loading: true, error: false });
+      const data = await Api.cart.addCartItem(values);
+      set(getCartDetailsData(data));
+    } catch (error) {
+      console.log(error);
+      set({ error: true });
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

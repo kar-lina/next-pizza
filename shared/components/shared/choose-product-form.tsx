@@ -7,39 +7,24 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 interface Props {
   name: string;
   imageUrl: string;
+  price: number;
   className?: string;
-  onCLickAdd?: VoidFunction;
+  onSubmit?: VoidFunction;
 }
 
-export const ChooseProductForm: React.FC<Props> = ({ name, imageUrl, onCLickAdd, className }) => {
-  const textDetails = 'Подробнее о пицце можно посмотреть в карточке пиццы';
-  const totalPrice = 500;
+export const ChooseProductForm: React.FC<Props> = ({ name, imageUrl, price, onSubmit, className }) => {
+
   return (
     <div className={cn('flex flex-1', className)}>
       <div className={cn('relative flex items-center justify-center flex-1 w-full')}>
-        <img
-          src={imageUrl}
-          alt={name}
-          className='relative left-2 top-2 trasition-all z-10 duration-300 w-[350px] h-[350px]'
-        />
+        <img src={imageUrl} alt={name} className="relative left-2 top-2 trasition-all z-10 duration-300 w-[350px] h-[350px]" />
       </div>
       <div className="w-[490px] bg-[#f7f6f5] p-7">
-        <DialogTitle className="font-extrabold mb-1">
-         {name} 
-        </DialogTitle>
-        <p className="text-gray-400">{textDetails}</p>
+        <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
+        {/* <p className="text-gray-400">{textDetails}</p> */}
 
-        <GroupVariants
-          selectedValue="2"
-          items={[
-            { name: 'Малкенькая', value: '1' },
-            { name: 'Средняя', value: '2' },
-            { name: 'Большая', value: '3', disabled: true },
-          ]}
-        />
-
-        <Button className="w-full р-[55px] text-base rounded-2xl mt-10" onClick={onCLickAdd}>
-          Добавить в корзину за {totalPrice} ₽
+        <Button className="w-full р-[55px] text-base rounded-2xl mt-10" onClick={onSubmit}>
+          Добавить в корзину за {price} ₽
         </Button>
       </div>
     </div>
