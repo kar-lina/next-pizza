@@ -9,10 +9,11 @@ interface Props {
   imageUrl: string;
   price: number;
   className?: string;
+  loading?: boolean;
   onSubmit?: VoidFunction;
 }
 
-export const ChooseProductForm: React.FC<Props> = ({ name, imageUrl, price, onSubmit, className }) => {
+export const ChooseProductForm: React.FC<Props> = ({ name, imageUrl, price, loading, onSubmit, className }) => {
 
   return (
     <div className={cn('flex flex-1', className)}>
@@ -23,7 +24,7 @@ export const ChooseProductForm: React.FC<Props> = ({ name, imageUrl, price, onSu
         <DialogTitle className="font-extrabold mb-1">{name}</DialogTitle>
         {/* <p className="text-gray-400">{textDetails}</p> */}
 
-        <Button className="w-full р-[55px] text-base rounded-2xl mt-10" onClick={onSubmit}>
+        <Button loading={loading} className="w-full р-[55px] text-base rounded-2xl mt-10" onClick={onSubmit}>
           Добавить в корзину за {price} ₽
         </Button>
       </div>

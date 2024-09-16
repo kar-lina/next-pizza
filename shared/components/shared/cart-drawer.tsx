@@ -44,9 +44,9 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ className, chil
             <div className="mb-2" key={item.id}>
               <CartDrawerItem
                 id={item.id}
-                imageUrl={item.imageUrl}
+                imageUrl={item.imageUrl ?? ''}
                 details={getCartItemDetails(item.ingredients, item.pizzaSize as PizzaSize, item.pizzaType as PizzaType)}
-                name={item.name}
+                name={item.name?? ''}
                 price={item.price}
                 quantity={item.quantity}
                 onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}

@@ -1,9 +1,9 @@
 import { Cart, CartItem, Ingredient, Product, ProductItem } from '@prisma/client';
 export type CartItemDTO = CartItem & {
-  productItem?: ProductItem & {
+  productItem: ProductItem & {
     product: Product;
   };
-  ingredients?: Ingredient[]
+  ingredients: Ingredient[]
 };
 
 // Здесь типизируем ответ с сервера на получение корзины

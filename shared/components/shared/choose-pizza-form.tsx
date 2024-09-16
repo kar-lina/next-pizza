@@ -14,10 +14,11 @@ interface Props {
   ingredients: Ingredient[];
   items: ProductItem[];
   className?: string;
+  loading?: boolean;
   onSumbit?: (itemId: number, ingredients: number[]) => void;
 }
 
-export const ChoosePizzaForm: React.FC<Props> = ({ name, imageUrl, ingredients, items, onSumbit, className }) => {
+export const ChoosePizzaForm: React.FC<Props> = ({ name, imageUrl, ingredients, items, loading, onSumbit, className }) => {
   const { type, size, setType, setSize, selectedIngredients, currentItemId, addIngredient, avalablePizzaSizes } = usePizzaOptions(items);
   const { totalPrice, textDetails } = getPizzaDetails(type, size, items, ingredients, selectedIngredients);
   const handleClickAddCart = () => {
@@ -44,7 +45,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({ name, imageUrl, ingredients, 
           </div>
         </div>
 
-        <Button className="w-full р-[55px] text-base rounded-2xl mt-10" onClick={handleClickAddCart}>
+        <Button loading={loading} className="w-full р-[55px] text-base rounded-2xl mt-10" onClick={handleClickAddCart}>
           Добавить в корзину за {totalPrice} ₽
         </Button>
       </div>
