@@ -33,7 +33,7 @@ export const useFilters = (): ReturnProps => {
   const searchParams = useSearchParams() as unknown as Map<keyof QueryFilters, string>;
 
   // Ingredients filter
-  const [selectedIngredients, { add, has, remove, toggle: toggleIngredients }] = useSet(new Set<string>(searchParams.get('ingredients')?.split(',') || []));
+  const [selectedIngredients, { add, toggle: toggleIngredients }] = useSet(new Set<string>(searchParams.get('ingredients')?.split(',') || []));
 
   const setSelectedIngredients = (ids: string[]) => {
     ids.forEach(add);
@@ -53,17 +53,31 @@ export const useFilters = (): ReturnProps => {
 
   // Pizza types  filter
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>(searchParams.get('pizzaTypes')?.split(',') || []));
-
-  return {
-    prices,
-    setPrices: updatePrices,
-    // updatePrices,
-    sizes,
-    setSizes: toggleSizes,
-    pizzaTypes,
-    setPizzaTypes: togglePizzaTypes,
-    selectedIngredients,
-    setSelectedIngredients,
-    setIngredients: toggleIngredients,
-  };
+  return React.useMemo(
+    () => ({
+      prices,
+      setPrices: updatePrices,
+      // updatePrices,
+      sizes,
+      setSizes: toggleSizes,
+      pizzaTypes,
+      setPizzaTypes: togglePizzaTypes,
+      selectedIngredients,
+      setSelectedIngredients,
+      setIngredients: toggleIngredients,
+    }),
+    [sizes, pizzaTypes, selectedIngredients, prices]
+  );
+  // return {
+  //   prices,
+  //   setPrices: updatePrices,
+  //   // updatePrices,
+  //   sizes,
+  //   setSizes: toggleSizes,
+  //   pizzaTypes,
+  //   setPizzaTypes: togglePizzaTypes,
+  //   selectedIngredients,
+  //   setSelectedIngredients,
+  //   setIngredients: toggleIngredients,
+  // };
 };
