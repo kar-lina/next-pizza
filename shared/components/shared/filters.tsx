@@ -10,6 +10,7 @@ interface Props {
 
 export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading } = useIngredients();
+  
   const { setPrices, setSizes, setPizzaTypes, setIngredients, setSelectedIngredients, ...filters } = useFilters();
   useQueryFilters(filters);
   const items = ingredients.map((ingredient) => ({ text: ingredient.name, value: String(ingredient.id) }));
