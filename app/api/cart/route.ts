@@ -40,53 +40,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// export async function POST(req: NextRequest) {
-//   try {
-//     let token = req.cookies.get('cartToken')?.value;
-//     if (!token) {
-//       token = crypto.randomUUID();
-//     }
-
-//     const userCart = await findOrCreateCart(token);
-//     const data = (await req.json()) as CreateCartItemValue;
-//     const findCartItem = await prisma.cartItem.findFirst({
-//       where: {
-//         cartId: userCart.id,
-//         productItemId: Number(data.productItemId),
-//         ingredients: { every: { id: { in: data.ingredientsIds } } },
-//       },
-//     });
-//     // Если товар найден => увеличиваем его количество
-//     if (findCartItem) {
-//       await prisma.cartItem.update({
-//         where: {
-//           id: findCartItem.id,
-//         },
-//         data: {
-//           quantity: findCartItem.quantity + 1,
-//         },
-//       });
-//     } else {
-//       // Если товар не нашелся => создаем новый
-//       await prisma.cartItem.create({
-//         data: {
-//           cartId: userCart.id,
-//           productItemId: Number(data.productItemId),
-//           quantity: 1,
-//           ingredients: { connect: data.ingredientsIds?.map((id) => ({ id: Number(id) })) },
-//         },
-//       });
-//     }
-
-//     const updatedUserCart = await updateCartTotalAmount(token);
-//     const responseWithToken = NextResponse.json(updatedUserCart);
-//     responseWithToken.cookies.set('cartToken', token);
-//     return responseWithToken;
-//   } catch (error) {
-//     console.log('[CART_POST] Server error', error);
-//     return NextResponse.json({ message: 'Не создать корзину' }, { status: 500 });
-//   }
-// }
 export async function POST(req: NextRequest) {
   try {
     let token = req.cookies.get('cartToken')?.value;
@@ -107,9 +60,12 @@ export async function POST(req: NextRequest) {
           every: {
             id: { in: data.ingredientsIds },
           },
+          some: {} // костыль чтобы работал строгий поиск по ingredients если он пустой
         },
       },
     });
+    // TODO переделать 1. найти все карт айтемы с нужным продакт айди а потом 
+    //2. пройтись циклом и проверить есть ли карт айтем у которого совпадают полностью ингредиенты с переданными в запросе (костыль)
 
     // Если товар был найден, делаем +1
     if (findCartItem) {

@@ -4,15 +4,17 @@ import { Container } from './container';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '../ui';
-import { ArrowRight, ShoppingCart, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import { SearchInput } from './search-input';
 import { CartButton } from './cart-button';
 
 interface Props {
+  hasSearch?: boolean;
+  hasCart?: boolean;
   className?: string;
 }
 
-export const Header: React.FC<Props> = ({ className }) => {
+export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
   return (
     <>
       <header className={cn('border-b ', className)}>
@@ -24,18 +26,22 @@ export const Header: React.FC<Props> = ({ className }) => {
               <p className="text-sm text-gray-400 leading-3">вкусней уже некуда</p>
             </div>
           </Link>
-          <div className="mx-5 md:mx-10 flex-1">
-            <SearchInput />
-          </div>
+          {hasSearch && (
+            <div className="mx-5 md:mx-10 flex-1">
+              <SearchInput />
+            </div>
+          )}
 
           <div className="flex items-center gap-3">
             <Button variant="outline" className="flex items-center gap-1">
               <User size={16} />
               <span className="hidden md:block"> Войти</span>
             </Button>
-            <div>
-              <CartButton />
-            </div>
+            {hasCart && (
+              <div>
+                <CartButton />
+              </div>
+            )}
           </div>
         </Container>
       </header>
