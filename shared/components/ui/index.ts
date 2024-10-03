@@ -8,3 +8,4 @@ export { Popover } from './popover';
 export { Checkbox } from './checkbox';
 export { Dialog } from './dialog';
 export { RangeSlider } from './range-slider';
+export {Textarea} from './textarea'

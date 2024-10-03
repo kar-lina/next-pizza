@@ -1,5 +1,7 @@
-import { Container, Title, WhiteBlock } from '@/shared/components/shared';
-import { Input } from '@/shared/components/ui';
+'use client';
+import { CheckoutCartItem, CheckoutItemPrice, Container, Title, WhiteBlock } from '@/shared/components/shared';
+import { Button, Input, Textarea } from '@/shared/components/ui';
+import { ArrowRight, Car, Package, PercentIcon } from 'lucide-react';
 import React from 'react';
 
 const CheckoutPage = () => {
@@ -9,7 +11,32 @@ const CheckoutPage = () => {
       <div className="flex gap-10">
         {/* Левая часть  */}
         <div className="flex flex-col gap-10 flex-1 mb-20">
-          <WhiteBlock title="1. Корзина">123123</WhiteBlock>
+          <WhiteBlock title="1. Корзина">
+            <div className="flex-flex-col-gap-5">
+              <CheckoutCartItem
+                id={1}
+                name="Пепперони Фреш с пикантными сырочками"
+                imageUrl="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                details="тонкое тесто, 32 см"
+                price={2000}
+                quantity={2}
+                onClickRemove={() => {}}
+                onClickCountButton={() => {}}
+                className="mb-5"
+              />
+              <CheckoutCartItem
+                id={1}
+                name="Пепперони Фреш с пикантными сырочками"
+                imageUrl="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+                details="тонкое тесто, 32 см"
+                price={2000}
+                quantity={2}
+                onClickRemove={() => {}}
+                onClickCountButton={() => {}}
+                className="mb-5"
+              />
+            </div>
+          </WhiteBlock>
           <WhiteBlock title="1. Персональные данные">
             <form className="grid grid-cols-2 gap-5">
               <Input name="firstName" placeholder="Имя" className="text-base" />
@@ -18,9 +45,29 @@ const CheckoutPage = () => {
               <Input name="phone" placeholder="Телефон" className="text-base" />
             </form>
           </WhiteBlock>
+          <WhiteBlock title="1. Адрес доставки">
+            <form className="flex flex-col gap-5">
+              <Input name="address" placeholder="Адрес" className="text-base" />
+              <Textarea name="comment" placeholder="Комментарий" rows={5} className="text-base" />
+            </form>
+          </WhiteBlock>
         </div>
         {/* Правая часть */}
-        <div className="w-[450px]">12312313</div>
+        <div className="w-[450px]">
+          <WhiteBlock className="p-6 sticky top-4">
+            <div className="flex flex-col gap-1">
+              <span className="text-xl">Итого:</span>
+              <span className="text-[34px] font-extrabold">{3333} ₽</span>
+            </div>
+            <CheckoutItemPrice title="Стоимость товаров:" value="3333 ₽" icon={<Package size={18} />} />
+            <CheckoutItemPrice title="Стоимость доставки:" value="250 ₽" icon={<Car size={18} />} />
+            <CheckoutItemPrice title="Налоги:" value="250 ₽" icon={<PercentIcon size={18} />} />
+            <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
+              Оформить заказ
+              <ArrowRight className="ml-2" size={18} />
+            </Button>
+          </WhiteBlock>
+        </div>
       </div>
     </Container>
   );
