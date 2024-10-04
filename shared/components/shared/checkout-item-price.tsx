@@ -16,7 +16,6 @@ export const CheckoutItemPrice: React.FC<Props> = ({ icon, title, value, classNa
           {icon}
           {title}
         </div>
-
         <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2"></div>
       </span>
       <span className="font-bold text-lg">{value}</span>

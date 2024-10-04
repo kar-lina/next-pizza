@@ -5,16 +5,13 @@ import { CartStateItem } from '../lib/get-cart-details-data';
 import { CreateCartItemValue } from '../services/dto/cart.dto';
 
 // формат aйтема корзины, не в чистом виде, который возвращается  с сервера, а в формате, который нужен для UI
-
 export interface CartState {
   loading: boolean;
   error: boolean;
   totalAmount: number;
   items: CartStateItem[];
-
   fetchCartItems: () => Promise<void>;
   updateItemQuantity: (id: number, quantity: number) => Promise<void>;
-
   addCartItem: (values: CreateCartItemValue) => Promise<void>;
   removeCartItem: (id: number) => Promise<void>;
 }

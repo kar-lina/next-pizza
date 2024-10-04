@@ -1,18 +1,21 @@
 'use client';
 import { CheckoutCartItem, CheckoutItemPrice, Container, Title, WhiteBlock } from '@/shared/components/shared';
 import { Button, Input, Textarea } from '@/shared/components/ui';
+import { useCart } from '@/shared/hooks';
 import { ArrowRight, Car, Package, PercentIcon } from 'lucide-react';
 import React from 'react';
 
 const CheckoutPage = () => {
+  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
+
   return (
     <Container className="mt-10">
       <Title text="Оформление заказа" size="lg" className="font-extrabold mb-8 text-[36px]" />
-      <div className="flex gap-10">
+      <div className="lg:flex gap-10">
         {/* Левая часть  */}
         <div className="flex flex-col gap-10 flex-1 mb-20">
           <WhiteBlock title="1. Корзина">
-            <div className="flex-flex-col-gap-5">
+            <div className="flex flex-col gap-5">
               <CheckoutCartItem
                 id={1}
                 name="Пепперони Фреш с пикантными сырочками"
@@ -38,7 +41,7 @@ const CheckoutPage = () => {
             </div>
           </WhiteBlock>
           <WhiteBlock title="1. Персональные данные">
-            <form className="grid grid-cols-2 gap-5">
+            <form className="grid md:grid-cols-2 gap-5">
               <Input name="firstName" placeholder="Имя" className="text-base" />
               <Input name="lastName" placeholder="Фамилия" className="text-base" />
               <Input name="email" placeholder="E-mail" className="text-base" />
@@ -53,13 +56,13 @@ const CheckoutPage = () => {
           </WhiteBlock>
         </div>
         {/* Правая часть */}
-        <div className="w-[450px]">
+        <div className="lg:w-[450px]">
           <WhiteBlock className="p-6 sticky top-4">
             <div className="flex flex-col gap-1">
               <span className="text-xl">Итого:</span>
-              <span className="text-[34px] font-extrabold">{3333} ₽</span>
+              <span className="text-[34px] font-extrabold">{totalAmount} ₽</span>
             </div>
-            <CheckoutItemPrice title="Стоимость товаров:" value="3333 ₽" icon={<Package size={18} />} />
+            <CheckoutItemPrice title="Стоимость товаров:" value={totalAmount+" ₽"} icon={<Package size={18} />} />
             <CheckoutItemPrice title="Стоимость доставки:" value="250 ₽" icon={<Car size={18} />} />
             <CheckoutItemPrice title="Налоги:" value="250 ₽" icon={<PercentIcon size={18} />} />
             <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">

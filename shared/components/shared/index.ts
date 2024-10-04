@@ -24,5 +24,6 @@ export { ProductForm } from './product-form';
 export { WhiteBlock } from './white-block';
 export { CheckoutItemPrice } from './checkout-item-price';
 export { CheckoutCartItem } from './checkout-cart-item';
+export { CheckoutCartItemSkeleton } from './checkout-cart-item-skeleton';
 export * from './cart-item-details';
 export * from './modals';

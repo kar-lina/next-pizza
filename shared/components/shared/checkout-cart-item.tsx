@@ -13,14 +13,14 @@ interface Props extends CartItemProps {
 
 export const CheckoutCartItem: React.FC<Props> = ({ name, imageUrl, details, price, quantity, onClickRemove, onClickCountButton, className }) => {
   return (
-    <div className={cn('flex items-center justify-between', className)}>
+    <div className={cn('md:flex items-center justify-between', className)}>
       <div className="flex gap-5 items-center">
         <CartItem.Image src={imageUrl} />
         <CartItem.Info name={name} details={details} />
       </div>
-      <CartItem.Price value={price} className="flex-shrink-0" />
 
-      <div className="flex -tems-center gap-5 ml-20">
+      <div className="flex justify-end md:justify-start gap-5 ">
+        <CartItem.Price value={price} className="flex-shrink-0" />
         <CartItem.CountButton onClick={onClickCountButton} value={quantity} />
         <button onClick={onClickRemove}>
           <X className="text-gray-400 cursor-pointer hover:text-gray-600" size={20} />

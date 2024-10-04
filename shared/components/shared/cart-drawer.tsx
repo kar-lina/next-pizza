@@ -1,32 +1,18 @@
 'use client';
 import React, { PropsWithChildren } from 'react';
-
-interface Props {
-  className?: string;
-}
-import { Sheet, SheetPortal, SheetOverlay, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription } from '@/shared/components/ui/sheet';
+import { Sheet, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle } from '@/shared/components/ui/sheet';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '../ui';
 import Link from 'next/link';
 import { CartDrawerItem } from './cart-drawer-item';
 import { getCartItemDetails } from '@/shared/lib';
-import { useCartStore } from '@/shared/store';
-import { PizzaSize, pizzaSizes, PizzaType } from '@/shared/constants/pizza';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import Image from 'next/image';
 import { Title } from './title';
+import { useCart } from '@/shared/hooks';
 
-export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ className, children }) => {
-  const [totalAmount, items, fetchCartItems, updateItemQuantity, removeCartItem] = useCartStore((state) => [
-    state.totalAmount,
-    state.items,
-    state.fetchCartItems,
-    state.updateItemQuantity,
-    state.removeCartItem,
-  ]);
-
-  React.useEffect(() => {
-    fetchCartItems();
-  }, []);
+export const CartDrawer: React.FC<PropsWithChildren> = ({ children }) => {
+  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
     const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
@@ -60,9 +46,7 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ className, chil
           </div>
 
         )}
-
-
-
+        
         {totalAmount > 0 && (
           <>
             <div className="flex-1 -mx-6 mt-5 scrollbar overflow-auto">
