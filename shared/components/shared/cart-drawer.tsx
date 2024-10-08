@@ -76,7 +76,7 @@ export const CartDrawer: React.FC<PropsWithChildren> = ({ children }) => {
                   </span>
                   <span className="text-lg font-bold"> {totalAmount} ₽</span>
                 </div>
-                <Link href="/cart">
+                <Link href="/checkout">
                   <Button type="submit" className="w-full h-12 text-base">
                     Оформить заказ <ArrowRight className="w-5 ml-2" />
                   </Button>

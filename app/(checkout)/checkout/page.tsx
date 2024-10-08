@@ -1,13 +1,18 @@
 'use client';
 import { CheckoutCartItem, CheckoutItemPrice, Container, Title, WhiteBlock } from '@/shared/components/shared';
 import { Button, Input, Textarea } from '@/shared/components/ui';
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import { useCart } from '@/shared/hooks';
+import { getCartItemDetails } from '@/shared/lib';
 import { ArrowRight, Car, Package, PercentIcon } from 'lucide-react';
 import React from 'react';
 
 const CheckoutPage = () => {
   const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
-
+  const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
+    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
   return (
     <Container className="mt-10">
       <Title text="Оформление заказа" size="lg" className="font-extrabold mb-8 text-[36px]" />
@@ -16,28 +21,19 @@ const CheckoutPage = () => {
         <div className="flex flex-col gap-10 flex-1 mb-20">
           <WhiteBlock title="1. Корзина">
             <div className="flex flex-col gap-5">
-              <CheckoutCartItem
-                id={1}
-                name="Пепперони Фреш с пикантными сырочками"
-                imageUrl="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                details="тонкое тесто, 32 см"
-                price={2000}
-                quantity={2}
-                onClickRemove={() => {}}
-                onClickCountButton={() => {}}
-                className="mb-5"
-              />
-              <CheckoutCartItem
-                id={1}
-                name="Пепперони Фреш с пикантными сырочками"
-                imageUrl="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                details="тонкое тесто, 32 см"
-                price={2000}
-                quantity={2}
-                onClickRemove={() => {}}
-                onClickCountButton={() => {}}
-                className="mb-5"
-              />
+              {items.map((item) => (
+                <CheckoutCartItem
+                  key={item.id}
+                  id={item.id}
+                  imageUrl={item.imageUrl ?? ''}
+                  details={getCartItemDetails(item.ingredients, item.pizzaSize as PizzaSize, item.pizzaType as PizzaType)}
+                  name={item.name ?? ''}
+                  price={item.price}
+                  quantity={item.quantity}
+                  onClickCountButton={onClickCountButton}
+                  onClickRemove={()=>removeCartItem(item.id)}
+                />
+              ))}
             </div>
           </WhiteBlock>
           <WhiteBlock title="1. Персональные данные">
@@ -62,7 +58,7 @@ const CheckoutPage = () => {
               <span className="text-xl">Итого:</span>
               <span className="text-[34px] font-extrabold">{totalAmount} ₽</span>
             </div>
-            <CheckoutItemPrice title="Стоимость товаров:" value={totalAmount+" ₽"} icon={<Package size={18} />} />
+            <CheckoutItemPrice title="Стоимость товаров:" value={totalAmount + ' ₽'} icon={<Package size={18} />} />
             <CheckoutItemPrice title="Стоимость доставки:" value="250 ₽" icon={<Car size={18} />} />
             <CheckoutItemPrice title="Налоги:" value="250 ₽" icon={<PercentIcon size={18} />} />
             <Button type="submit" className="w-full h-14 rounded-2xl mt-6 text-base font-bold">
