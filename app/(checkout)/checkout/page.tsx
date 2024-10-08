@@ -30,8 +30,8 @@ const CheckoutPage = () => {
                   name={item.name ?? ''}
                   price={item.price}
                   quantity={item.quantity}
-                  onClickCountButton={onClickCountButton}
-                  onClickRemove={()=>removeCartItem(item.id)}
+                  onClickCountButton={() => onClickCountButton}
+                  onClickRemove={() => removeCartItem(item.id)}
                 />
               ))}
             </div>
